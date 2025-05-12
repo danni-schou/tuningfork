@@ -168,7 +168,7 @@ namespace Google.Android.PerformanceTuner
         {
             if (asset.IsScene)
             {
-                if (!asset.IsInSceneList)
+                if (!IsInSceneList(asset))
                 {
                     scenes.Add(asset);
                     Debug.LogWarning(asset.ToString());
@@ -181,6 +181,16 @@ namespace Google.Android.PerformanceTuner
                     }
                 }
             }
+        }
+        
+        private static bool IsInSceneList(AddressableAssetEntry asset)
+        {
+            foreach (var scene in EditorBuildSettings.scenes)
+            {
+                if (string.Equals(scene.guid.ToString(), asset.guid)) return true;
+            }
+
+            return false;
         }
 #endif // UNITY_EDITOR
 
